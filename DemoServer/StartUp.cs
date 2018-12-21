@@ -9,7 +9,8 @@ namespace DemoServer
         public void Configure(IApplicationBuilder app, IApplicationLifetime lifetime)
         {
             lifetime.ApplicationStarted.Register(() =>
-                BrowserUtil.OpenBrowser("http://localhost:5000/index.html?q=" + DateTime.Now.Ticks));
+                BrowserUtil.OpenBrowser("http://localhost:5000/?t=" + DateTime.Now.Ticks));
+            app.UseDefaultFiles();
             app.UseStaticFiles();
         }
     }
