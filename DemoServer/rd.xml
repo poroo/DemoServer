@@ -7,6 +7,7 @@
     </Assembly>
     <Assembly Name="Microsoft.AspNetCore.StaticFiles">
       <Type Name="Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware" Dynamic="Required All" />
+      <Type Name="Microsoft.AspNetCore.StaticFiles.DefaultFilesMiddleware" Dynamic="Required All" />
     </Assembly>
     <Assembly Name="Microsoft.AspNetCore.Server.Kestrel" Dynamic="Required All"/>
     <Assembly Name="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets">
