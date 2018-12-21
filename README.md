@@ -13,4 +13,4 @@ It's possible to compile to other platforms as well, haven't tested them.
 * Main entry file should be index.html
 * Start httpserver.exe 
 
-Program automatically starts up 
+Browser automatically starts up and loads index.html
