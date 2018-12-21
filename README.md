@@ -1,5 +1,5 @@
 # DemoServer
-Simple http server for serving static files based on Asp.Net Core Kestrel. 
+Simple http server for serving static files based on Asp.Net Core Kestrel. Uses [CoreRT](https://github.com/dotnet/corert) to create a small native executable.
 
 Main purpose of the software is to package small and efficient http server together with Webgl / Html canvas demo. This enables the browser to access features that are not available when running demos directly in a browser.
 
