@@ -9,8 +9,11 @@ dotnet publish -c release -r win-x64 (for windows)
 It's possible to compile to other platforms as well, haven't tested them.
 
 # Usage
-* Simply copy your demo to .../publish/demo/
+* Simply copy your demo to ./demo/
 * Main entry file should be index.html
-* Start httpserver.exe 
+* Start demoserver.exe 
 
 Browser automatically starts up and loads index.html
+
+# Releases
+Binaries are available at [github releases](https://github.com/poroo/DemoServer/releases).
