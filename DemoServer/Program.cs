@@ -16,7 +16,9 @@ namespace DemoServer
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             return new WebHostBuilder().UseKestrel().UseContentRoot(ContentRoot).UseWebRoot(WebRoot)
-                .UseStartup<StartUp>();
+                .UseStartup<Startup>()
+                .UseUrls("http://localhost:5000");
         }
+        
     }
 }
