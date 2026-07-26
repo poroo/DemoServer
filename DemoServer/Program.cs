@@ -1,24 +1,29 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using DemoServer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace DemoServer
+const string webRoot = "demo";
+var contentRoot = $"{Directory.GetCurrentDirectory()}";
+
+var builder = WebApplication.CreateSlimBuilder(new WebApplicationOptions()
 {
-    internal class Program
-    {
-        private const string WebRoot = "demo";
-        private static string ContentRoot => $"{Directory.GetCurrentDirectory()}";
+    ContentRootPath = contentRoot,
+    WebRootPath = webRoot
+});
+// Clear all logging, since we don't need any.
+builder.Logging.ClearProviders();
+builder.WebHost.UseKestrel()
+    .UseUrls("http://localhost:5000");
 
-        private static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+var url = "http://localhost:5000/?t=" + DateTime.Now.Ticks;
+var app = builder.Build();
+app.Lifetime.ApplicationStarted.Register(() => BrowserUtil.OpenBrowser(url));
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return new WebHostBuilder().UseKestrel().UseContentRoot(ContentRoot).UseWebRoot(WebRoot)
-                .UseStartup<Startup>()
-                .UseUrls("http://localhost:5000");
-        }
-        
-    }
-}
+Console.WriteLine($"Chrome should now open at '{url}'. If it doesn't, open the url manually in any browser.");
+Console.WriteLine("Press Ctrl-C to exit");
+await app.RunAsync();

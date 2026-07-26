@@ -1,36 +1,35 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace DemoServer
+namespace DemoServer;
+
+internal static class BrowserUtil
 {
-    internal static class BrowserUtil
+    public static void OpenBrowser(string url)
     {
-        public static void OpenBrowser(string url)
+        try
         {
-            try
+            Process.Start(url);
+        }
+        catch
+        {
+            // Bybassing issue: https://github.com/dotnet/corefx/issues/10361
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Process.Start(url);
+                url = url.Replace("&", "^&");
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") {CreateNoWindow = true});
             }
-            catch
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                // Bybassing issue: https://github.com/dotnet/corefx/issues/10361
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    url = url.Replace("&", "^&");
-                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") {CreateNoWindow = true});
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    Process.Start("xdg-open", url);
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    Process.Start("open", url);
-                }
-                else
-                {
-                    throw;
-                }
+                Process.Start("xdg-open", url);
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                Process.Start("open", url);
+            }
+            else
+            {
+                throw;
             }
         }
     }
