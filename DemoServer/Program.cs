@@ -22,7 +22,10 @@ var url = "http://localhost:5000/?t=" + DateTime.Now.Ticks;
 var app = builder.Build();
 app.Lifetime.ApplicationStarted.Register(() => BrowserUtil.OpenBrowser(url));
 app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions {
+            ServeUnknownFileTypes = true,
+            DefaultContentType = "application/octet-stream"
+        });
 
 Console.WriteLine($"Chrome should now open at '{url}'. If it doesn't, open the url manually in any browser.");
 Console.WriteLine("Press Ctrl-C to exit");
